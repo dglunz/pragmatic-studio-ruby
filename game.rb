@@ -1,5 +1,5 @@
 require_relative 'player' 
-require_relative 'dice'
+require_relative 'fight'
 class Game
   attr_accessor :title
   attr_reader :players
@@ -12,21 +12,20 @@ class Game
     @players << player
   end
 
-  def play
-    die = Dice.new
-    num_rolled = die.roll
-    @players.each do |player|
-      case num_rolled
-        when 1..2
-          player.attack
-          "#{player.name} rolled a #{num_rolled}. Attacked"
-        when 3..4
-          "#{player.name} rolled a #{num_rolled}. Skipped"
-        when 5..6
-          player.heal 
-          "#{player.name} rolled a #{num_rolled}. Healed"
+  def play(rounds)
+    puts "#{@title} Players: "
+    puts @players
+    1.upto(rounds) do |count|
+      puts "\nRound #{count}: "
+      @players.each do |player|
+        Fight.take_turn(player)
+        puts player
       end
-      puts "#{player.name} has #{player.health} health"
     end
   end
+
+  def print_stats
+    puts "\n#{@title} Stats:"
+  end
+  
 end
