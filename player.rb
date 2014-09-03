@@ -1,3 +1,4 @@
+require_relative 'treasure'
 class Player
   attr_accessor :name
   attr_reader :health, :score
@@ -9,8 +10,14 @@ class Player
 
   def found_treasure(treasure)
     @found_treasures[treasure.name] += treasure.gold_value
-    puts "#{name} found #{treasure.name} worth #{treasure.gold_value}"
+    puts "#{name} found a #{treasure.name} worth #{treasure.gold_value}"
     puts "#{name}'s Inventory: #{@found_treasures}"
+  end
+
+  def each_found_treasure
+    @found_treasures.each do |name, value|
+      yield Treasure.new(name, value)
+    end
   end
 
   def attack

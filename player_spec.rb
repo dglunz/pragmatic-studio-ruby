@@ -6,6 +6,28 @@ describe Player do
     @starting_health = @player.health
   end
 
+  it "yields each found treasure and its total points" do
+    @player.found_treasure(Treasure.new(:skillet, 100))
+    @player.found_treasure(Treasure.new(:skillet, 100))
+    @player.found_treasure(Treasure.new(:hammer, 50))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    @player.found_treasure(Treasure.new(:bottle, 5))
+    
+    yielded = []
+    @player.each_found_treasure do |treasure|
+      yielded << treasure
+    end
+    
+    expect(yielded).to eq([
+      Treasure.new(:skillet, 200), 
+      Treasure.new(:hammer, 50), 
+      Treasure.new(:bottle, 25)
+   ])
+  end
+
   it "has a capitalized name" do
     expect(@player.name).to eq("Larry")
   end

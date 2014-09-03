@@ -26,11 +26,13 @@ class Game
   end
 
   def print_stats
-    puts "\n#{@title} Stats:"
-
+    puts "\n#{@title} Stats:\n\n"
     @players.sort.each do |player|
       formatted_name = player.name.ljust(20, '.')
-      puts "#{formatted_name} #{player.score}"
+      player.each_found_treasure do |treasure|
+        puts "#{treasure.gold_value} from #{treasure.name}"
+      end
+      puts "#{formatted_name} total #{player.score}"
     end
   end
 
