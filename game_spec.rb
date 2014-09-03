@@ -1,8 +1,8 @@
 require_relative 'game'
 
 describe Game do
-	
-	before do 
+
+	before do
 		@game = Game.new("Adventure")
 
 		@initial_health = 150
@@ -14,23 +14,23 @@ describe Game do
 
 	it "rolls a 5 or 6 heals" do
 		allow_any_instance_of(Dice).to receive(:roll).and_return(5)
-		@game.play
+		@game.play(2)
 
-		expect(@player.health).to eq(@initial_health + 10)
+		expect(@player.health).to eq(@initial_health + (10 * 2))
 	end
 
 	it "rolls a 3 or 4 skips" do
 		allow_any_instance_of(Dice).to receive(:roll).and_return(3)
-		@game.play
+		@game.play(1)
 
 		expect(@player.health).to eq(@initial_health)
 	end
 
 	it "rolls a 1 or 2 attacks" do
 		allow_any_instance_of(Dice).to receive(:roll).and_return(1)
-		@game.play
+		@game.play(4)
 
-		expect(@player.health).to eq(@initial_health - 10)
+		expect(@player.health).to eq(@initial_health - (10*4))
 	end
 
 end

@@ -21,13 +21,17 @@ class Player
   def strong?
     @health >= 150
   end
-  
+
   def average?
     @health.between?(50, 150)
   end
-  
+
   def weak?
     @health <= 50
+  end
+
+  def <=>(other)
+    other.health <=> health
   end
 
   def to_s

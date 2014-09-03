@@ -1,5 +1,7 @@
-require_relative 'player' 
+require_relative 'player'
 require_relative 'fight'
+require_relative 'treasure'
+
 class Game
   attr_accessor :title
   attr_reader :players
@@ -19,13 +21,17 @@ class Game
       puts "\nRound #{count}: "
       @players.each do |player|
         Fight.take_turn(player)
-        puts player
       end
     end
   end
 
   def print_stats
     puts "\n#{@title} Stats:"
+
+    @players.sort.each do |player|
+      formatted_name = player.name.ljust(20, '.')
+      puts "#{formatted_name} #{player.health}"
+    end
   end
-  
+
 end
