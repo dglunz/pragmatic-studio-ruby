@@ -30,7 +30,7 @@ class Game
 
     @players.sort.each do |player|
       formatted_name = player.name.ljust(20, '.')
-      puts "#{formatted_name} #{player.health}"
+      puts "#{formatted_name} #{player.score}"
     end
   end
 

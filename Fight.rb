@@ -16,7 +16,7 @@ module Fight
 	          player.heal
 	          "#{player.name} rolled a #{num_rolled}. Healed"
 		end
-		puts "#{player.name} found a #{loot.name}, worth #{loot.gold_value}"
+		player.found_treasure(loot)
 		puts player
 	end
 end

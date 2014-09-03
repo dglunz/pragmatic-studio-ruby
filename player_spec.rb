@@ -15,11 +15,17 @@ describe Player do
   end
 
   it "has a string representation" do
-    expect(@player.to_s).to eq("Larry has a health of 150")
+    expect(@player.to_s).to eq("Larry's Health: 150\nLarry's Score: 0\n\n")
   end
 
-  it "computes a score as health + name length" do
-    expect(@player.score).to eq(155)
+  it "computes points as the sum of all treasure value" do
+    expect(@player.score).to eq(0)
+    @player.found_treasure(Treasure.new(:crown, 500))
+    expect(@player.score).to eq(500)
+    @player.found_treasure(Treasure.new(:necklace, 100))
+    expect(@player.score).to eq(600)
+    @player.found_treasure(Treasure.new(:broken_axe, 1))
+    expect(@player.score).to eq(601)
   end
 
   it "increases health by 10 when healed" do

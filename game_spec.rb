@@ -12,6 +12,11 @@ describe Game do
 		@game.add_player(@player)
 	end
 
+	it "assigns a treasure for points during a turn" do
+		@game.play(1)
+		expect(@player.score).not_to be_zero
+	end
+
 	it "rolls a 5 or 6 heals" do
 		allow_any_instance_of(Dice).to receive(:roll).and_return(5)
 		@game.play(2)

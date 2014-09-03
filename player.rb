@@ -4,6 +4,13 @@ class Player
   def initialize(name, health=100)
     @name = name.capitalize
     @health = health
+    @found_treasures = Hash.new(0)
+  end
+
+  def found_treasure(treasure)
+    @found_treasures[treasure.name] += treasure.gold_value
+    puts "#{name} found #{treasure.name} worth #{treasure.gold_value}"
+    puts "#{name}'s Inventory: #{@found_treasures}"
   end
 
   def attack
@@ -15,7 +22,7 @@ class Player
   end
 
   def score
-    @score = @health + @name.length
+    @found_treasures.values.reduce(0, :+)
   end
 
   def strong?
@@ -31,10 +38,10 @@ class Player
   end
 
   def <=>(other)
-    other.health <=> health
+    other.score <=> score
   end
 
   def to_s
-    "#{@name} has a health of #{@health}"
+    "#{@name}'s Health: #{@health}\n#{@name}'s Score: #{score}\n\n"
   end
 end
