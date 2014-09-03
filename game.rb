@@ -18,11 +18,18 @@ class Game
     puts "#{@title} Players: "
     puts @players
     1.upto(rounds) do |count|
+      if block_given?
+        break if yield
+      end
       puts "\nRound #{count}: "
       @players.each do |player|
         Fight.take_turn(player)
       end
     end
+  end
+
+  def total_points
+    @players.reduce(0) { |sum, player| sum + player.score }
   end
 
   def print_stats
@@ -36,6 +43,20 @@ class Game
       end
       total = "Total".ljust(20, '.')
       puts "#{total} #{player.score}"
+    end
+  end
+
+  def load_players(file)
+    File.readlines(file).each do |line|
+      name, health = line.split(",")
+      player = Player.new(name, health.to_i)
+      add_player(player)
+    end
+  end
+
+  def save(to_file)
+    File.open(to_file, "w") do |file|
+      file.puts print_stats
     end
   end
 
